@@ -1,0 +1,30 @@
+\chapter{研究内容与方法}
+\section{研究方案}
+图应先在正文提及，再紧随相关文字放置。图~\ref{fig:example} 是图题与分章编号示例。
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\parbox[c][5cm][c]{6.67cm}{\centering 请在此放入清晰的图片}}
+  \caption{示例图题}\label{fig:example}
+\end{figure}
+
+表~\ref{tab:example} 为三线表示例。表题在表格上方，表与正文同宽，数字按列对齐。
+\begin{table}[htbp]
+  \centering
+  \caption{示例数据表}\label{tab:example}
+  \zihao{5}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcc@{}}
+    \toprule[1.5pt]
+    项目 & 数值 / 单位 & 说明 \\
+    \midrule[1pt]
+    样本 A & 10 & 示例数据 \\
+    样本 B & 12 & 示例数据 \\
+    \bottomrule[1.5pt]
+  \end{tabular*}
+\end{table}
+
+公式单独成行，按章编号为括号中的“章号-序号”。
+\begin{equation}\label{eq:example}
+  y=ax+b
+\end{equation}
+\noindent 式中，$y$ 为响应量；$x$ 为自变量；$a$、$b$ 为参数。

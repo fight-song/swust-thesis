@@ -1,0 +1,332 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{swust-thesis}[2026/09/28 Southwest University of Science and Technology thesis layout]
+\providecommand{\ThesisVariant}{professional-master}
+
+\RequirePackage{fontspec}
+\RequirePackage{xeCJK}
+\RequirePackage{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{fancyhdr}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{caption}
+\RequirePackage{tocloft}
+\RequirePackage[perpage]{footmisc}
+\RequirePackage{etoolbox}
+\RequirePackage[numbers,sort&compress,super]{natbib}
+\AtBeginDocument{\setcitestyle{super,square,comma}}
+\RequirePackage{hyperref}
+\definecolor{SWUSTCoverOrange}{RGB}{242,100,0}
+\definecolor{SWUSTCoverBlue}{RGB}{35,91,159}
+\definecolor{SWUSTCoverGreen}{RGB}{0,128,64}
+
+% ===== 填写论文信息；下列为排版示例，提交前逐项核对和替换 =====
+\newcommand{\ThesisTitle}{论文题目}
+\newcommand{\CoverTitleFirstLine}{\ThesisTitle}
+\newcommand{\CoverTitleSecondLine}{}
+\newcommand{\EnglishTitlePlaceholder}{Thesis Title}
+\newcommand{\ThesisTitleEN}{\EnglishTitlePlaceholder}
+\newcommand{\DegreeType}{电子信息硕士} % 示例类别，按实际学位类型填写
+\newcommand{\DegreeTypeEN}{Master of Electronic and Information Engineering}
+\newcommand{\AuthorName}{XXX}
+\newcommand{\AuthorNameEN}{XXX}
+\newcommand{\StudentID}{XXXXXXXXXXX}
+\newcommand{\Supervisor}{XXX 教授}
+\newcommand{\SupervisorEN}{XXX}
+\newcommand{\ExternalSupervisor}{} % 无校外指导教师时保持留空
+\newcommand{\MajorField}{电子信息}
+\newcommand{\College}{XXXX学院}
+\newcommand{\Classification}{}
+\newcommand{\UDCCode}{}
+\newcommand{\SecurityLevel}{} % 涉密论文须按学校审批结果填写，并另行处理
+\newcommand{\DefenseDate}{20XX年XX月XX日}
+\newcommand{\ThesisDate}{20XX 年 XX 月}
+\newcommand{\ThesisDateEN}{Month 20XX}
+\newcommand{\CommitteeMembers}{XXX、XXX、XXX}
+\newcommand{\CommitteeMembersSecondLine}{}
+\newcommand{\Reviewers}{XXX、XXX}
+\newcommand{\ThesisTypeCN}{应用研究} % 按规范列出的论文类型选择
+\newcommand{\ThesisTypeEN}{Application Research}
+
+% 三种模板的专用项目。博士参考样式英文题名页把 Doctor 误写为 Master，此处按学位级别修正。
+\newcommand{\CoverTitle}{专业学位硕士研究生学位论文}
+\newcommand{\CoverTitleColor}{SWUSTCoverOrange}
+\newcommand{\CoverFieldLabel}{专业（领域）名称}
+\newcommand{\DegreeLevelCN}{硕士}
+\newcommand{\DegreeLevelEN}{Master}
+\newcommand{\WorkNameEN}{Thesis}
+\newcommand{\TypeLabelEN}{TYPE OF THESIS}
+\newcommand{\EvenHeaderText}{西南科技大学硕士学位论文}
+\newcommand{\AbstractLengthCN}{600--800}
+\newcommand{\AbstractFocusCN}{新见解}
+
+\ifdefstring{\ThesisVariant}{professional-master}{}{%
+  \ifdefstring{\ThesisVariant}{academic-master}{%
+    \renewcommand{\CoverTitle}{学术型硕士研究生学位论文}
+    \renewcommand{\CoverTitleColor}{SWUSTCoverBlue}
+    \renewcommand{\CoverFieldLabel}{学\quad 科}
+    \renewcommand{\DegreeType}{工学硕士}
+    \renewcommand{\DegreeTypeEN}{Master of Engineering}
+    \renewcommand{\MajorField}{材料科学与工程}
+  }{%
+    \ifdefstring{\ThesisVariant}{academic-doctor}{%
+      \renewcommand{\CoverTitle}{学术型博士研究生学位论文}
+      \renewcommand{\CoverTitleColor}{SWUSTCoverGreen}
+      \renewcommand{\CoverFieldLabel}{学\quad 科}
+      \renewcommand{\DegreeType}{理学博士}
+      \renewcommand{\DegreeTypeEN}{Doctor of Science}
+      \renewcommand{\MajorField}{生物学}
+      \renewcommand{\DegreeLevelCN}{博士}
+      \renewcommand{\DegreeLevelEN}{Doctor}
+      \renewcommand{\WorkNameEN}{Dissertation}
+      \renewcommand{\EnglishTitlePlaceholder}{Dissertation Title}
+      \renewcommand{\TypeLabelEN}{TYPE OF DISSERTATION}
+      \renewcommand{\EvenHeaderText}{西南科技大学博士学位论文}
+      \renewcommand{\AbstractLengthCN}{1000--1500}
+      \renewcommand{\AbstractFocusCN}{创新点}
+    }{\PackageError{swust-template}{Unknown ThesisVariant `\ThesisVariant'}%
+      {Use professional-master, academic-master, or academic-doctor.}}%
+  }%
+}
+
+% ===== 页面、字体与标题 =====
+\geometry{a4paper,top=3cm,bottom=2.5cm,inner=2.6cm,outer=2.6cm,
+  headheight=15pt,headsep=0.47cm,footskip=0.75cm}
+% 常用字体不存在时使用 TeX 发行版的 Fandol / TeX Gyre。
+\IfFontExistsTF{SimSun}
+  {\setCJKmainfont[AutoFakeBold=2]{SimSun}}
+  {\setCJKmainfont[BoldFont=FandolSong-Bold,ItalicFont=FandolKai-Regular]{FandolSong-Regular}}
+\IfFontExistsTF{SimHei}
+  {\setCJKsansfont{SimHei}\newCJKfontfamily\SWUSTHei{SimHei}}
+  {\setCJKsansfont{FandolHei-Regular}\newCJKfontfamily\SWUSTHei{FandolHei-Regular}}
+\IfFontExistsTF{KaiTi}
+  {\newCJKfontfamily\SWUSTKai{KaiTi}}
+  {\newCJKfontfamily\SWUSTKai{FandolKai-Regular}}
+\IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{\setmainfont{TeX Gyre Termes}}
+\IfFontExistsTF{Arial}{\newfontfamily\EnglishTitleFont{Arial}}{\newfontfamily\EnglishTitleFont{TeX Gyre Heros}}
+
+% 封面默认使用思源宋体 Heavy，代替学校示例中的方正粗宋简体。
+% 如果已安装方正粗宋：注释下面一行，取消下一行注释（名称按本机字体填写）。
+\newCJKfontfamily\SWUSTCoverFont[Path=fonts/]{SourceHanSerifCN-Heavy.otf}
+% \newCJKfontfamily\SWUSTCoverFont{方正粗宋简体}
+
+\linespread{1.2}\selectfont
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+\raggedbottom
+\ctexset{
+  chapter={name={},number={\arabic{chapter}},aftername={\quad},pagestyle=fancy,
+    format={\centering\bfseries\zihao{3}},beforeskip={1.2\baselineskip},afterskip={\baselineskip}},
+  section={format={\raggedright\zihao{-3}},beforeskip={\baselineskip},afterskip={0.5\baselineskip}},
+  subsection={format={\raggedright\zihao{4}},indent={2em},
+    beforeskip={0.5\baselineskip},afterskip={0pt}}
+}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\renewcommand{\contentsname}{目\quad 录}
+\renewcommand{\cfttoctitlefont}{\hfill\bfseries\zihao{3}}
+\renewcommand{\cftaftertoctitle}{\hfill}
+\setlength{\cftbeforetoctitleskip}{1.2\baselineskip}
+\setlength{\cftaftertoctitleskip}{1\baselineskip}
+\renewcommand{\cftchapfont}{\zihao{-4}\bfseries}
+\renewcommand{\cftchappagefont}{\zihao{-4}\bfseries}
+\renewcommand{\cftsecfont}{\zihao{-4}}
+\renewcommand{\cftsubsecfont}{\zihao{-4}}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\setlength{\cftsecindent}{1em}
+\setlength{\cftsubsecindent}{2em}
+
+% 页眉：奇数页为当前章或前置内容，偶数页为学校论文名称；双横线各 0.5 磅。
+\newcommand{\SWUSTCurrentHeader}{}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[CO]{\zihao{5}\SWUSTCurrentHeader}
+\fancyhead[CE]{\zihao{5}\EvenHeaderText}
+\fancyfoot[C]{\zihao{5}\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\headrule}{\hrule width\headwidth height0.5pt\vskip1pt\hrule width\headwidth height0.5pt}
+\newif\ifbodypages
+\bodypagesfalse
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\footrule}{\ifbodypages\hbox to\headwidth{\hfil\rule{0.25\headwidth}{0.4pt}\hfil}\fi}
+\fancypagestyle{plain}{\fancyhf{}\fancyhead[CO]{\zihao{5}\SWUSTCurrentHeader}
+  \fancyhead[CE]{\zihao{5}\EvenHeaderText}
+  \fancyfoot[C]{\zihao{5}\thepage}\renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\headrule}{\hrule width\headwidth height0.5pt\vskip1pt\hrule width\headwidth height0.5pt}
+  \renewcommand{\footrule}{\ifbodypages\hbox to\headwidth{\hfil\rule{0.25\headwidth}{0.4pt}\hfil}\fi}}
+\fancypagestyle{frontplain}{\fancyhf{}\fancyfoot[C]{\zihao{5}\thepage}
+  \renewcommand{\headrulewidth}{0pt}\renewcommand{\headrule}{}
+  \renewcommand{\footrulewidth}{0pt}\renewcommand{\footrule}{}}
+\renewcommand{\chaptermark}[1]{\gdef\SWUSTCurrentHeader{#1}\markboth{#1}{#1}}
+\renewcommand{\footnoterule}{\kern-3pt\hrule width0.25\textwidth height0.4pt\kern2.6pt}
+\renewcommand{\thefootnote}{{\fontfamily{lmr}\selectfont\textcircled{\arabic{footnote}}}}
+\setlength{\intextsep}{0.5\baselineskip}
+\setlength{\textfloatsep}{0.5\baselineskip}
+\setlength{\floatsep}{0.5\baselineskip}
+\setlength{\abovedisplayskip}{0.5\baselineskip}
+\setlength{\belowdisplayskip}{0.5\baselineskip}
+
+% 图、表、公式按章编号。图题置图下；表题置表上。
+\renewcommand{\thefigure}{\thechapter-\arabic{figure}}
+\renewcommand{\thetable}{\thechapter-\arabic{table}}
+\renewcommand{\theequation}{\thechapter-\arabic{equation}}
+\captionsetup{font=small,justification=centering,labelsep=space,skip=0.5\baselineskip}
+\captionsetup[figure]{position=bottom}
+\captionsetup[table]{position=top}
+\newcommand{\upcite}[1]{\citep{#1}}
+\hypersetup{unicode=true,hidelinks}
+\pdfstringdefDisableCommands{\def\quad{ }}
+\AtBeginDocument{\hypersetup{pdftitle={\ThesisTitle},pdfauthor={\AuthorName}}}
+
+% 无编号章节写入目录，并设置奇数页页眉。
+\newcommand{\ThesisChapter}[1]{\clearpage\chapter*{#1}\addcontentsline{toc}{chapter}{#1}\gdef\SWUSTCurrentHeader{#1}\markboth{#1}{#1}}
+\newcommand{\InfoRow}[2]{\noindent #1\hspace{0.3em}#2\par\vspace{0.4\baselineskip}}
+\newcommand{\CoverInfoRow}[2]{%
+  \noindent\makebox[5.2cm][r]{{\SWUSTHei #1}}%
+  \hspace{1em}\begin{minipage}[b]{7cm}\centering\SWUSTKai #2\par\vspace{0.1em}\hrule height0.5pt\end{minipage}%
+  \par\vspace{0.5\baselineskip}}
+
+% 封面不编号，因此用实际输出页数判断纸张正反面。
+\newcounter{physicalpage}
+\AddToHook{shipout/after}{\stepcounter{physicalpage}}
+\newcommand{\ClearToPhysicalOdd}{%
+  \clearpage
+  \ifodd\value{physicalpage}\thispagestyle{empty}\null\clearpage\fi}
+
+\newcommand{\KeywordsCN}{关键词一；关键词二；关键词三}
+\newcommand{\KeywordsEN}{Keyword one; Keyword two; Keyword three}
+
+\long\def\SWUSTMakeCover{%
+\thispagestyle{empty}
+\begin{center}
+  \vspace*{-0.8cm}
+  \IfFileExists{figures/swust-logo.png}{\includegraphics[width=9cm]{figures/swust-logo.png}}{%
+    {\color{blue!65!black}\bfseries\zihao{1}西南科技大学}\par
+    {\color{blue!65!black}\small Southwest University of Science and Technology}}
+  \par\vspace{1.4cm}
+  {\color{\CoverTitleColor}\SWUSTCoverFont\fontsize{32pt}{38pt}\selectfont\CoverTitle}\par
+  \vspace{0.35cm}{\SWUSTHei\fontsize{15pt}{20pt}\selectfont（\DegreeType）}\par
+  \vspace{2.6cm}
+  {\SWUSTHei\fontsize{22pt}{27pt}\selectfont\begin{minipage}{14cm}\centering
+    \CoverTitleFirstLine\par\vspace{0.15cm}\hrule height0.5pt
+    \ifdefempty{\CoverTitleSecondLine}{}{\vspace{0.35cm}\CoverTitleSecondLine\par\vspace{0.15cm}\hrule height0.5pt}%
+  \end{minipage}}\par
+  \vspace{3.2cm}
+  \begin{minipage}{13cm}\centering\fontsize{16pt}{22pt}\selectfont
+    \CoverInfoRow{作者姓名}{\AuthorName}
+    \CoverInfoRow{学\quad 号}{\StudentID}
+    \CoverInfoRow{导\quad 师}{\Supervisor}
+    \CoverInfoRow{\CoverFieldLabel}{\MajorField}
+    \CoverInfoRow{答辩委员会成员}{\CommitteeMembers}
+    \ifdefempty{\CommitteeMembersSecondLine}{}{\CoverInfoRow{}{\CommitteeMembersSecondLine}}
+    \CoverInfoRow{评\quad 阅\quad 人}{\Reviewers}
+  \end{minipage}
+  \vfill
+  {\zihao{4}\ThesisDate}\par\vspace{0.2cm}
+\end{center}
+\clearpage
+}
+
+\long\def\SWUSTMakeTitlePages{%
+\pagenumbering{Roman}\setcounter{page}{1}
+\thispagestyle{frontplain}
+\vspace*{0.8cm}
+\noindent 分类号：\Classification\hfill 学校代码：10619\par
+\noindent UDC：\UDCCode\hfill 密级：\SecurityLevel
+\begin{center}
+  \vspace{2.2cm}{\bfseries\zihao{-2}\EvenHeaderText}\par
+  \vspace{0.3cm}{\zihao{4}（\DegreeType）}\par
+  \vspace{2.6cm}{\SWUSTHei\zihao{2}\ThesisTitle}\par
+  \vspace{1.5cm}{\zihao{3}\AuthorName}\par
+\end{center}
+\vspace{1.4cm}
+\begin{center}\begin{minipage}{11cm}\zihao{4}
+\InfoRow{学科（专业）或领域名称：}{\MajorField}
+\InfoRow{指导教师姓名、职称：}{\Supervisor}
+\InfoRow{校外指导教师姓名、职称：}{\ExternalSupervisor}
+\InfoRow{学生所属学院名称：}{\College}
+\InfoRow{论文答辩日期：}{\DefenseDate}
+\end{minipage}\end{center}
+\clearpage
+
+\thispagestyle{frontplain}
+\begingroup\linespread{1.5}\selectfont
+\begin{center}
+  \vspace*{1.1cm}
+  {\zihao{3}A \WorkNameEN{} of Southwest University of Science and Technology\\[0.3em]
+    for the Degree of \DegreeLevelEN}\par
+  \vspace{0.45cm}{\zihao{4}(\DegreeTypeEN)}\par
+  \vspace{2.5cm}{{\EnglishTitleFont\fontsize{22pt}{30pt}\selectfont\ThesisTitleEN}}\par
+\end{center}
+\vspace{3cm}
+\begin{center}\EnglishTitleFont\zihao{4}
+  Candidate: \AuthorNameEN\par\vspace{0.4cm}
+  Supervisor: \SupervisorEN
+\end{center}
+\vfill
+\begin{center}{\EnglishTitleFont\ThesisDateEN}\end{center}
+\clearpage
+\endgroup
+}
+
+\long\def\SWUSTMakeDeclarations{%
+\thispagestyle{frontplain}
+\begingroup\linespread{1.5}\selectfont
+\begin{center}{\SWUSTHei\zihao{-2}学位论文独创性声明}\end{center}
+\vspace{0.7cm}
+本人郑重声明：所呈交的学位论文是我个人在导师的指导下进行的研究工作及取得的研究成果。尽我所知，除了文中特别加以标注和致谢的地方外，论文中不包含其他人已经发表或撰写过的研究成果。与我一同工作的同志对本研究所做的任何贡献均已在论文中作了明确的说明，并表示了谢意。本人依法享有和承担由此论文所产生的权利和责任。
+\par\vspace{1.1cm}\noindent\hspace*{4.7cm}论文作者签名：\hfill 日期：\quad 年\quad 月\quad 日
+
+\vspace{1.5cm}
+\begin{center}{\SWUSTHei\zihao{-2}学位论文版权使用授权声明}\end{center}
+\vspace{0.7cm}
+本学位论文作者完全了解学校有关保存、使用学位论文的规定，即：研究生在西南科技大学学习和工作期间论文工作的知识产权单位属于西南科技大学。同意授权西南科技大学保留并向国家有关部门或机构送交该论文的印刷本和电子版本，允许该论文被查阅和借阅。同意授权西南科技大学可以将本学位论文的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印、扫描或数字化等其他复制手段保存和汇编本学位论文。保密论文在解密后遵守此规定。
+\par\vspace{1.1cm}\noindent\hspace*{4.7cm}论文作者签名：\hfill 日期：\quad 年\quad 月\quad 日
+\par\vspace{0.7cm}\noindent\hspace*{4.7cm}指导教师签名：\hfill 日期：\quad 年\quad 月\quad 日
+\clearpage
+\endgroup
+}
+
+\newcommand{\SWUSTAbstractHeading}[1]{%
+  \clearpage\thispagestyle{fancy}%
+  \gdef\SWUSTCurrentHeader{摘\quad 要}%
+  \markboth{摘\quad 要}{摘\quad 要}%
+  \vspace*{0.8cm}%
+  \begin{center}{\bfseries\zihao{3}#1}\end{center}%
+  \vspace{0.8\baselineskip}%
+}
+\newcommand{\SWUSTStartChineseAbstract}{%
+  \pagestyle{fancy}%
+  \SWUSTAbstractHeading{摘\quad 要}%
+}
+\newcommand{\SWUSTEndChineseAbstract}{%
+  \par\vspace{\baselineskip}%
+  \noindent{\zihao{5}\bfseries 关键词：}{\zihao{5}\KeywordsCN}%
+  \par\noindent{\zihao{5}\bfseries 论文类型：}{\zihao{5}\ThesisTypeCN}%
+  \clearpage
+}
+\newcommand{\SWUSTStartEnglishAbstract}{%
+  \SWUSTAbstractHeading{ABSTRACT}%
+  \begingroup\setlength{\parindent}{0pt}%
+}
+\newcommand{\SWUSTEndEnglishAbstract}{%
+  \par\endgroup
+  \par\vspace{\baselineskip}%
+  \noindent{\zihao{5}\bfseries KEY WORDS:}\hspace{0.5em}{\zihao{5}\KeywordsEN}%
+  \par\noindent{\zihao{5}\bfseries \TypeLabelEN: }{\zihao{5}\ThesisTypeEN}%
+}
+\newcommand{\SWUSTMakeTOC}{\ClearToPhysicalOdd\gdef\SWUSTCurrentHeader{目\quad 录}\markboth{目\quad 录}{目\quad 录}\tableofcontents}
+\newcommand{\SWUSTStartMain}{\ClearToPhysicalOdd\pagenumbering{arabic}\setcounter{page}{1}\bodypagestrue}
+\newcommand{\SWUSTUnnumberedChapter}[1]{\ThesisChapter{#1}}
+% BibTeX 生成文献表；沿用正文的无编号章标题、目录与页眉。
+\renewcommand{\bibsection}{\ThesisChapter{参考文献}}
+\renewcommand{\bibfont}{\zihao{5}}
+\newcommand{\SWUSTStartAppendices}{%
+\appendix
+\ctexset{chapter={name={附录~,},number={\Alph{chapter}},aftername={\quad}}}
+\renewcommand{\thefigure}{附录~\thechapter-\arabic{figure}}
+\renewcommand{\thetable}{附录~\thechapter-\arabic{table}}
+\renewcommand{\theequation}{附录~\thechapter-\arabic{equation}}
+}

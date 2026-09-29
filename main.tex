@@ -1,0 +1,78 @@
+% 西南科技大学研究生学位论文主文件
+% 编译顺序：XeLaTeX → BibTeX → XeLaTeX → XeLaTeX。
+\documentclass[UTF8,a4paper,twoside,openany,zihao=-4,fontset=none]{ctexbook}
+
+% 只改这一行选择模板：professional-master / academic-master / academic-doctor
+\providecommand{\ThesisVariant}{professional-master}
+\usepackage{swust-thesis}
+
+% ===== 填写论文信息 =====
+\renewcommand{\ThesisTitle}{论文题目}
+\renewcommand{\ThesisTitleEN}{\EnglishTitlePlaceholder} % 填写正式英文题目时替换右侧内容
+\renewcommand{\AuthorName}{XXX}
+\renewcommand{\AuthorNameEN}{XXX}
+\renewcommand{\StudentID}{XXXXXXXXXXX}
+\renewcommand{\Supervisor}{XXX 教授}
+\renewcommand{\SupervisorEN}{XXX}
+\renewcommand{\ExternalSupervisor}{} % 没有校外导师则留空
+\renewcommand{\College}{XXXX学院}
+\renewcommand{\DefenseDate}{20XX年XX月XX日}
+\renewcommand{\ThesisDate}{20XX年XX月}
+\renewcommand{\ThesisDateEN}{Month 20XX}
+\renewcommand{\CommitteeMembers}{XXX、XXX、XXX}
+\renewcommand{\Reviewers}{XXX、XXX}
+\renewcommand{\Classification}{}
+\renewcommand{\UDCCode}{}
+\renewcommand{\SecurityLevel}{}
+\renewcommand{\KeywordsCN}{关键词一；关键词二；关键词三}
+\renewcommand{\KeywordsEN}{Keyword one; Keyword two; Keyword three}
+\renewcommand{\ThesisTypeCN}{应用研究}
+\renewcommand{\ThesisTypeEN}{Application Research}
+
+% 学位类型和学科/领域随模板选择有示例默认值；按实际情况修改时取消注释。
+% \renewcommand{\DegreeType}{实际学位类型}
+% \renewcommand{\DegreeTypeEN}{Official English Degree Name}
+% \renewcommand{\MajorField}{实际学科或领域}
+
+% 长题目与名单按需要分成两行；不要在 ThesisTitle 中手动插入换行。
+% \renewcommand{\CoverTitleFirstLine}{题目第一行}
+% \renewcommand{\CoverTitleSecondLine}{题目第二行}
+% \renewcommand{\CommitteeMembersSecondLine}{其余答辩委员}
+
+\begin{document}
+
+\SWUSTMakeCover
+\SWUSTMakeTitlePages
+\SWUSTMakeDeclarations
+
+\SWUSTStartChineseAbstract
+\input{content/abstract-cn.tex}
+\SWUSTEndChineseAbstract
+
+\SWUSTStartEnglishAbstract
+\input{content/abstract-en.tex}
+\SWUSTEndEnglishAbstract
+
+\SWUSTMakeTOC
+% 若需要主要符号表，可在这里添加：\SWUSTUnnumberedChapter{主要符号表}
+
+\SWUSTStartMain
+\input{content/chapter01-intro.tex}
+\input{content/chapter02-method.tex}
+\input{content/chapter03-conclusion.tex}
+
+\SWUSTUnnumberedChapter{致\quad 谢}
+\input{content/acknowledgements.tex}
+
+% 仅列出正文引用的文献，按首次引用顺序编号。
+\bibliographystyle{gbt7714-numerical}
+\bibliography{references}
+
+% 无附录时可注释下两行。
+\SWUSTStartAppendices
+\input{content/appendix-a.tex}
+
+\SWUSTUnnumberedChapter{攻读学位期间取得的研究成果}
+\input{content/achievements.tex}
+
+\end{document}
